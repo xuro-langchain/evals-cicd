@@ -1,6 +1,6 @@
 """Multi-agent system with supervisor routing to specialized subagents.
 
-Version: 1.0.2 - Test eval with secrets configured
+Version: 1.0.3 - Fix report script for CI
 """
 
 from typing import Annotated
