@@ -1,6 +1,6 @@
 """Multi-agent system with supervisor routing to specialized subagents.
 
-Version: 1.0.4 - Add status emojis to report
+Version: notebook-triggered @ 2026-02-19 10:27
 """
 
 from typing import Annotated
