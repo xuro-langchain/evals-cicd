@@ -1,6 +1,6 @@
 """Multi-agent system with supervisor routing to specialized subagents.
 
-Version: 1.0.3 - Fix report script for CI
+Version: 1.0.4 - Add status emojis to report
 """
 
 from typing import Annotated
