@@ -19,8 +19,11 @@ import os
 import sys
 from collections import defaultdict
 
-from dotenv import load_dotenv
-load_dotenv()
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # dotenv not needed in CI where env vars are set directly
 
 from langsmith import Client
 
