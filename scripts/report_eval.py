@@ -19,8 +19,11 @@ import os
 import sys
 from collections import defaultdict
 
-from dotenv import load_dotenv
-load_dotenv()
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # dotenv not needed in CI where env vars are set directly
 
 from langsmith import Client
 
@@ -123,7 +126,7 @@ def write_markdown_report(results: list, output_file: str = "eval_comment.md"):
             f.write("|--------|-------|-----------|--------|\n")
 
             for row in result["table_rows"]:
-                status_icon = {"PASS": "PASS", "FAIL": "FAIL", "N/A": "-"}[row["status"]]
+                status_icon = {"PASS": "✅ PASS", "FAIL": "❌ FAIL", "N/A": "-"}[row["status"]]
                 f.write(f"| {row['key']} | {row['score']} | {row['threshold']} | {status_icon} |\n")
 
             num_passed = result.get("num_passed", 0)
