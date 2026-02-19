@@ -1,0 +1,80 @@
+name: LangSmith Evaluation
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    environment: production  # Use GitHub environment for secrets
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      LANGSMITH_API_KEY: ${{ secrets.LANGSMITH_API_KEY }}
+      LANGSMITH_TRACING: "true"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Run evaluations
+        run: uv run pytest -m evaluator --junitxml=results.xml
+
+      - name: Upload evaluation configs
+        uses: actions/upload-artifact@v4
+        with:
+          name: eval-configs
+          path: evaluation_config__*.json
+
+  report:
+    needs: evaluate
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      LANGSMITH_API_KEY: ${{ secrets.LANGSMITH_API_KEY }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Download evaluation configs
+        uses: actions/download-artifact@v4
+        with:
+          name: eval-configs
+
+      - name: Install langsmith
+        run: pip install langsmith
+
+      - name: Generate report
+        run: python scripts/report_eval.py
+
+      - name: Post PR comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const comment = fs.readFileSync('eval_comment.md', 'utf8');
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });

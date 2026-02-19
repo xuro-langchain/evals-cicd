@@ -1,0 +1,28 @@
+[project]
+name = "langsmith-cicd-standalone"
+version = "0.1.0"
+description = "Minimal example of LangSmith evaluations in CI/CD"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "langchain-openai>=0.3.0",
+    "langchain-core>=0.3.0",
+    "langchain-community>=0.3.0",
+    "langgraph>=0.2.0",
+    "langgraph-supervisor>=0.0.1",
+    "langsmith>=0.2.0",
+    "openevals>=0.1.0",
+    "sqlalchemy>=2.0.0",
+    "requests>=2.31.0",
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.24.0",
+    "python-dotenv>=1.0.0",
+    "click>=8.3.1",
+    "rich>=14.3.2",
+]
+
+[tool.pytest.ini_options]
+markers = [
+    "evaluator: LangSmith evaluation tests",
+]
+asyncio_mode = "auto"
