@@ -3,6 +3,9 @@ name: LangSmith Evaluation
 on:
   pull_request:
     branches: [main]
+    paths:
+      - "app/graph.py"
+      - "app/tools.py"
 
 permissions:
   contents: read
