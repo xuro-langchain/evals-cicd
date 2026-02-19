@@ -5,6 +5,7 @@ __pycache__/
 venv/
 .pytest_cache/
 uv.lock
+.ipynb_checkpoints/
 
 # Environment
 .env
