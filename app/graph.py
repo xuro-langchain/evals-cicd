@@ -1,6 +1,6 @@
 """Multi-agent system with supervisor routing to specialized subagents.
 
-Version: 1.0.1 - CI/CD trigger test
+Version: 1.0.2 - Test eval with secrets configured
 """
 
 from typing import Annotated
