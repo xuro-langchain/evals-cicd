@@ -1,4 +1,7 @@
-"""Multi-agent system with supervisor routing to specialized subagents."""
+"""Multi-agent system with supervisor routing to specialized subagents.
+
+Version: 1.0.1 - CI/CD trigger test
+"""
 
 from typing import Annotated
 from typing_extensions import TypedDict, NotRequired
